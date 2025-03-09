@@ -1,47 +1,81 @@
 ---
-sidebar_position: 1
+id: automating-dell-command-update-ninjaone
+title: Automating Dell Command Update with NinjaOne - A Step-by-Step Guide
+slug: /automating-dell-command-update-ninjaone
+description: Learn how to automate Dell Command Update using PowerShell scripts with NinjaOne for efficient system management.
+authors: [your-name]
+tags: [ninjaone, dell-command-update, powershell, automation, it-management]
+date: 2025-03-08
 ---
 
-# Tutorial Intro
+## Introduction
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Keeping Dell systems up-to-date with the latest drivers and firmware is a critical task for IT professionals and Managed Service Providers (MSPs). Manually updating each device is time-consuming and prone to error, especially across large fleets. Fortunately, tools like Dell Command Update (DCU) and NinjaOne, a powerful Remote Monitoring and Management (RMM) platform, can streamline this process through automation.
 
-## Getting Started
+In this post, we’ll explore how to leverage PowerShell scripts from the [Public-Ninja-One-Scripts repository](https://github.com/Sp-e-n-c-er/Public-Ninja-One-Scripts/tree/main/Dell%20Command%20Update) to automate DCU deployments and updates within NinjaOne. Whether you're onboarding new devices or maintaining an existing infrastructure, this guide will help you save time and ensure consistency.
 
-Get started by **creating a new site**.
+## Why Automate Dell Command Update?
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+Dell Command Update simplifies driver and firmware management by providing a single tool to check, download, and install updates tailored to each Dell device. Pairing it with NinjaOne’s scripting capabilities takes this a step further by:
 
-### What you'll need
+- **Reducing Manual Effort**: Automate repetitive tasks across multiple endpoints.
+- **Ensuring Consistency**: Apply uniform update policies fleet-wide.
+- **Improving Efficiency**: Schedule updates to run silently in the background.
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+The scripts from the Public-Ninja-One-Scripts repository provide a ready-made solution to deploy DCU, configure it, and apply updates—all integrated with NinjaOne.
 
-## Generate a new site
+## Getting Started with the Scripts
 
-Generate a new Docusaurus site using the **classic template**.
+The [Dell Command Update folder](https://github.com/Sp-e-n-c-er/Public-Ninja-One-Scripts/tree/main/Dell%20Command%20Update) in the repository contains several PowerShell scripts designed for NinjaOne. Here’s a breakdown of the key scripts:
 
-The classic template will automatically be added to your project after you run the command:
+1. **`Install-DellCommandUpdate.ps1`**
+   - Downloads and installs the latest version of DCU silently.
+   - Ideal for onboarding new devices or ensuring DCU is present on all systems.
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+2. **`Configure-DellCommandUpdate.ps1`**
+   - Customizes DCU settings via an XML configuration file.
+   - Allows you to specify update types (e.g., drivers, firmware) and schedules.
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+3. **`Run-DellCommandUpdate.ps1`**
+   - Executes DCU to check for and install updates based on your configuration.
+   - Can be scheduled in NinjaOne for regular maintenance.
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+### Prerequisites
 
-## Start your site
+Before you begin, ensure the following:
+- NinjaOne RMM is deployed on your target devices.
+- PowerShell execution policy allows script execution (`Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`).
+- Administrative access to the endpoints.
 
-Run the development server:
+## Step-by-Step Implementation
 
-```bash
-cd my-website
-npm run start
-```
+### 1. Import Scripts into NinjaOne
+- Clone or download the repository from GitHub.
+- In the NinjaOne console, navigate to **Administration > Scripts**.
+- Upload each `.ps1` file as a new script, assigning appropriate names and categories.
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+### 2. Deploy DCU to Endpoints
+- Create a policy or run the `Install-DellCommandUpdate.ps1` script on demand.
+- The script downloads DCU from Dell’s official site and installs it silently with the `/s` flag.
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+### 3. Configure DCU Settings
+- Modify the XML configuration in `Configure-DellCommandUpdate.ps1` to suit your needs (e.g., exclude BIOS updates for testing).
+- Run the script to apply the configuration across your fleet.
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+### 4. Schedule Updates
+- Use `Run-DellCommandUpdate.ps1` in a NinjaOne scheduled task to check for updates weekly or monthly.
+- Optionally, add logic to prompt users for reboots if required.
+
+## Customization Tips
+
+- **Filter Updates**: Adjust the XML to include only critical drivers or exclude firmware for manual review.
+- **Error Handling**: Add try-catch blocks to log failures in NinjaOne for troubleshooting.
+- **Reporting**: Integrate NinjaOne’s custom fields to track update status per device.
+
+## Conclusion
+
+Automating Dell Command Update with NinjaOne transforms a tedious chore into a seamless process. The scripts from the Public-Ninja-One-Scripts repository provide a solid foundation, and with a bit of customization, you can tailor them to your organization’s needs. Start small, test on a few devices, and scale up as you gain confidence.
+
+Ready to dive in? Grab the scripts [here](https://github.com/Sp-e-n-c-er/Public-Ninja-One-Scripts/tree/main/Dell%20Command%20Update) and let us know how it goes in the comments!
+
+---
