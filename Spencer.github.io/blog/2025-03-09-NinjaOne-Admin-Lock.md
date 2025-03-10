@@ -1,10 +1,7 @@
 ---
 slug: AdminLock-Script
 title: Locking NinjaOne Systray scripts from users
-authors:
-  - name: Spencer Heath
-    title: Technical Security Engineer
-    url: https://github.com/Sp-e-n-c-er
+authors: sheath
 tags: [powershell]
 ---
 

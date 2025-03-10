@@ -1,36 +1,29 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
-
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #7586d3;
-  --ifm-color-primary-dark: #5e71c8;
-  --ifm-color-primary-darker: #5467bd;
-  --ifm-color-primary-darkest: #4b5eaa;
-  --ifm-color-primary-light: #8c9ade;
-  --ifm-color-primary-lighter: #96a4e6;
-  --ifm-color-primary-lightest: #afb8ed;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(75, 94, 170, 0.1);
-  --ifm-background-color: #ffffff;
-  --ifm-font-color-base: #1e2125;
-  --ifm-background-surface-color: #f5f6f8;
-}
-
-/* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
-  --ifm-color-primary: #4b5eaa;
-  --ifm-color-primary-dark: #435597;
-  --ifm-color-primary-darker: #3e4e8c;
-  --ifm-color-primary-darkest: #334074;
-  --ifm-color-primary-light: #5467bd;
-  --ifm-color-primary-lighter: #5e71c8;
-  --ifm-color-primary-lightest: #7586d3;
-  --docusaurus-highlighted-code-line-bg: rgba(75, 94, 170, 0.15);
+  --ifm-color-primary: #5a6b7d;
+  --ifm-color-primary-dark: #506070;
+  --ifm-color-primary-darker: #4a5866;
+  --ifm-color-primary-darkest: #3e4a56;
+  --ifm-color-primary-light: #64768a;
+  --ifm-color-primary-lighter: #6e8095;
+  --ifm-color-primary-lightest: #8291a4;
+  --docusaurus-highlighted-code-line-bg: rgba(90, 107, 125, 0.15);
   --ifm-background-color: #1e2125;
   --ifm-font-color-base: #e0e0e0;
   --ifm-background-surface-color: #2c3036;
+  --ifm-code-font-size: 95%;
+}
+
+/* Light mode overrides */
+[data-theme='light'] {
+  --ifm-color-primary: #4a5866; /* Darker shade for contrast on white */
+  --ifm-color-primary-dark: #40505c;
+  --ifm-color-primary-darker: #3a4854;
+  --ifm-color-primary-darkest: #303d47;
+  --ifm-color-primary-light: #546070;
+  --ifm-color-primary-lighter: #5e6b7d;
+  --ifm-color-primary-lightest: #728192;
+  --docusaurus-highlighted-code-line-bg: rgba(90, 107, 125, 0.1);
+  --ifm-background-color: #ffffff; /* White background */
+  --ifm-font-color-base: #1e2125; /* Dark text for readability */
+  --ifm-background-surface-color: #f5f6f8; /* Light gray for surfaces */
 }

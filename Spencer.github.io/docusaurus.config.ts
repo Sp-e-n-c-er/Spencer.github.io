@@ -8,7 +8,7 @@ const config: Config = {
   title: 'Spencer Heath',
   tagline: 'Spencer Heath\'s personal website and blog',
   favicon: 'img/favicon.ico',
-  url: 'https://Sp-e-n-c-er.github.io/',
+  url: 'https://spencerheath.info',
   baseUrl: '/',
   organizationName: 'Sp-e-n-c-er',
   projectName: 'Spencer.github.io',
@@ -48,7 +48,11 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: false,
+      respectPrefersColorScheme: false,
+    },
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
       title: 'My Site',
