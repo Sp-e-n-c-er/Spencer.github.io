@@ -6,7 +6,6 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Spencer Heath',
-  tagline: 'Spencer Heath\'s personal website and blog',
   favicon: 'img/favicon.ico',
   url: 'https://spencerheath.info',
   baseUrl: '/',
@@ -53,9 +52,9 @@ const config: Config = {
       disableSwitch: false,
       respectPrefersColorScheme: false,
     },
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/logo.svg',
     navbar: {
-      title: 'My Site',
+      title: 'Home',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
