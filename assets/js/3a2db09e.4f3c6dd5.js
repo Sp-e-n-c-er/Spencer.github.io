@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkspencer_github_io=self.webpackChunkspencer_github_io||[]).push([[121],{8070:e=>{e.exports=JSON.parse('{"tags":[{"label":"Powershell","permalink":"/blog/tags/Powershell","description":"All about powershell","count":1}]}')}}]);

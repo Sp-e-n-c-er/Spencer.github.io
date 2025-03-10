@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkspencer_github_io=self.webpackChunkspencer_github_io||[]).push([[472],{5513:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Locking NinjaOne Systray scripts from users","permalink":"/Spencer.github.io/blog/AdminLock-Script","unlisted":false,"date":"2025-03-09T00:00:00.000Z"}]}')}}]);
