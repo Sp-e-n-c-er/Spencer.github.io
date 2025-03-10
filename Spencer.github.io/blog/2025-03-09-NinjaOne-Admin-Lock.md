@@ -1,3 +1,13 @@
+---
+slug: AdminLock-Script
+title: Locking NinjaOne Systray scripts from users
+authors:
+  - name: Spencer Heath
+    title: Technical Security Engineer
+    url: https://github.com/Sp-e-n-c-er
+tags: [powershell]
+---
+
 # Restricting NinjaOne System Tray Scripts to 'Admin-Only' Access
 
 This guide explains how to create scripts for the NinjaOne system tray and configure some to run exclusively for administrators, using a checkbox within NinjaOne to control access. This approach enhances security and oversight for script execution. However, this method is best suited for restricting scripts that you’d prefer end users not interact with, rather than for critical security measures. It’s ideal for minor administrative tasks where accidental access wouldn’t pose a significant security risk, not for safeguarding highly sensitive operations.
