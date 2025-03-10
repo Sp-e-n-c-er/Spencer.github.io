@@ -10,23 +10,17 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'Spencer Heath',
+  tagline: 'Spencer Heath\'s personal website',
   favicon: 'img/favicon.ico',
-  url: 'https://spencerheath.info',
+  url: 'https://Sp-e-n-c-er.github.io/',
   baseUrl: '/',
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'Sp-e-n-c-er', // Usually your GitHub org/user name.
-  projectName: 'Spencer.github.io', // Usually your repo name.
+  organizationName: 'Sp-e-n-c-er',
+  projectName: 'Spencer.github.io',
   deploymentBranch: "gh-pages",
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
+  trailingSlash: false,
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
