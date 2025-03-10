@@ -105,6 +105,6 @@ This configuration not only isolates admin scripts visually in the system tray b
 
 See below for a visual guide on the systray setup, and the message a user will see if they dont have the permissions to run this.
 
-<img src="https://github.com/user-attachments/assets/6fa5af98-e91d-49a6-b1e8-24e474745bb1" alt="Admin Only Scripts System Tray Example" width="300"> <img src="https://github.com/user-attachments/assets/3e9481d7-bfbc-4106-90d4-dc4b03d5a6c7" alt="Invalid rights message" width="300">
+<img src="https://github.com/user-attachments/assets/6fa5af98-e91d-49a6-b1e8-24e474745bb1" alt="Admin Only Scripts System Tray Example" width="300" /> <img src="https://github.com/user-attachments/assets/3e9481d7-bfbc-4106-90d4-dc4b03d5a6c7" alt="Invalid rights message" width="300" />
 
 
