@@ -11,7 +11,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Spencer Heath',
-  tagline: 'Spencer Heath\'s personal website',
+  tagline: 'Spencer Heath\'s personal website and blog',
   favicon: 'img/favicon.ico',
   url: 'https://Sp-e-n-c-er.github.io/',
   baseUrl: '/',
