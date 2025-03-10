@@ -15,7 +15,7 @@ const config: Config = {
   // For GitHub pages deployment, it is often '/<projectName>/'
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  baseUrl: '/Spencer.github.io/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
