@@ -1,4 +1,24 @@
 powershell:
-  label: Powershell
-  permalink: /Powershell
-  description: All about powershell
+  label: PowerShell
+  permalink: /PowerShell
+  description: Scripts and tools leveraging PowerShell for automation and system management
+
+ninjaone:
+  label: NinjaOne
+  permalink: /NinjaOne
+  description: Solutions integrating with NinjaOne for remote monitoring and management
+
+dell:
+  label: Dell
+  permalink: /Dell
+  description: Tools and scripts tailored for Dell hardware and software management
+
+automation:
+  label: Automation
+  permalink: /Automation
+  description: Resources focused on automating repetitive IT tasks and workflows
+
+system-management:
+  label: System Management
+  permalink: /System_Management
+  description: Scripts and utilities for managing and maintaining IT systems

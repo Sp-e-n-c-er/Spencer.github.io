@@ -2,7 +2,7 @@
 slug: AdminLock-Script
 title: Locking NinjaOne Systray scripts from users
 authors: sheath
-tags: [powershell]
+tags: [powershell, ninjaone, automation]
 ---
 
 # Restricting NinjaOne System Tray Scripts to 'Admin-Only' Access
