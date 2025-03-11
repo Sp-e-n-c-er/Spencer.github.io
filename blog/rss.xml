@@ -4,10 +4,79 @@
         <title>Spencer Heath Blog</title>
         <link>https://spencerheath.info/blog</link>
         <description>Spencer Heath Blog</description>
-        <lastBuildDate>Sun, 09 Mar 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 10 Mar 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Streamlining Dell Updates with NinjaOne: A PowerShell Solution]]></title>
+            <link>https://spencerheath.info/blog/dcu-automation-ninjaone</link>
+            <guid>https://spencerheath.info/blog/dcu-automation-ninjaone</guid>
+            <pubDate>Mon, 10 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Automating Dell System Updates]]></description>
+            <content:encoded><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="automating-dell-system-updates">Automating Dell System Updates<a href="https://spencerheath.info/blog/dcu-automation-ninjaone#automating-dell-system-updates" class="hash-link" aria-label="Direct link to Automating Dell System Updates" title="Direct link to Automating Dell System Updates">​</a></h2>
+<p>Managing updates for Dell systems can be a time-consuming task, especially across multiple devices. To address this, I’ve developed a PowerShell script that integrates Dell Command Update (DCU) with NinjaOne, automating the process from installation to execution. This post walks through what it does, how it works, and how you can deploy it in your environment.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="purpose-and-features">Purpose and Features<a href="https://spencerheath.info/blog/dcu-automation-ninjaone#purpose-and-features" class="hash-link" aria-label="Direct link to Purpose and Features" title="Direct link to Purpose and Features">​</a></h3>
+<p>Dell Command Update is a powerful tool for keeping Dell systems current with the latest BIOS, firmware, drivers, and applications. My script takes it a step further by automating key operations within NinjaOne, an RMM platform I use extensively. Here’s what it offers:</p>
+<ul>
+<li><strong>System Validation</strong>: Confirms the device is a Dell system and removes conflicting "Dell Update" applications that could interfere with DCU.</li>
+<li><strong>Dynamic Installation</strong>: Downloads and installs the latest DCU version directly from Dell’s support site, ensuring you’re always up to date.</li>
+<li><strong>Customizable Scans</strong>: Supports general scans for all updates or targeted BIOS/firmware scans, with results logged to NinjaOne custom fields (except for general scans, which output to CLI).</li>
+<li><strong>Flexible Updates</strong>: Options to install all updates, exclude BIOS/firmware, or focus solely on BIOS/firmware, all triggered via a single NinjaOne variable.</li>
+<li><strong>NinjaOne Integration</strong>: Updates custom fields (<code>DCU1</code> for status, <code>DCU2</code> for details) to streamline monitoring and reporting.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="configuration">Configuration<a href="https://spencerheath.info/blog/dcu-automation-ninjaone#configuration" class="hash-link" aria-label="Direct link to Configuration" title="Direct link to Configuration">​</a></h3>
+<p>The script is controlled through a NinjaOne dropdown variable named <code>pleaseSelectAnOptionToRun</code>. You’ll need to set this up with the following options:</p>
+<ul>
+<li><strong>Install</strong>: Installs DCU after removing incompatible apps.</li>
+<li><strong>Remove Incompatible Versions</strong>: Cleans up conflicting Dell Update software.</li>
+<li><strong>Run Scan</strong>: Performs a full update scan, outputting results to the CLI.</li>
+<li><strong>Run BIOS and Firmware Scan</strong>: Scans for BIOS/firmware updates, logging to NinjaOne fields.</li>
+<li><strong>Run Scan And Install All</strong>: Scans and applies all available updates.</li>
+<li><strong>Run Scan And Install Excluding BIOS and Firmware</strong>: Applies updates, skipping BIOS/firmware.</li>
+<li><strong>Run Scan And Install BIOS and Firmware ONLY</strong>: Targets only BIOS/firmware updates.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="technical-overview">Technical Overview<a href="https://spencerheath.info/blog/dcu-automation-ninjaone#technical-overview" class="hash-link" aria-label="Direct link to Technical Overview" title="Direct link to Technical Overview">​</a></h3>
+<p>Here’s a breakdown of the script’s core functionality:</p>
+<ul>
+<li><strong>Pre-Installation Checks</strong>: Scans the registry (<code>HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall</code>) to uninstall incompatible Dell Update apps silently, ensuring a clean slate for DCU.</li>
+<li><strong>DCU Download</strong>: Uses <code>Invoke-RestMethod</code> to scrape Dell’s support page for the latest DCU <code>.exe</code>, then downloads it with <code>Invoke-WebRequest</code>—no manual URL hunting required.</li>
+<li><strong>Execution Logic</strong>: Leverages <code>dcu-cli.exe</code> with tailored arguments (e.g., <code>-silent</code>, <code>-updateType</code>) to scan or apply updates. Exit codes are mapped to descriptive statuses in NinjaOne fields:<!-- -->
+<ul>
+<li><code>0</code>: Updates available.</li>
+<li><code>500</code>: No updates found.</li>
+<li><code>1, 5</code>: Reboot required.</li>
+<li>Full mapping in the script’s <code>Handle-DCUExitCode</code> function.</li>
+</ul>
+</li>
+<li><strong>Error Handling</strong>: Wraps operations in try-catch blocks, logging failures to NinjaOne for easy troubleshooting.</li>
+</ul>
+<p>The full script is available on my GitHub: <a href="https://github.com/Sp-e-n-c-er/Public-Ninja-One-Scripts/blob/main/Dell%20Command%20Update/Dell%20Command%20Update%20Automation%20Toolkit.ps1" target="_blank" rel="noopener noreferrer">Public-Ninja-One-Scripts</a>.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="benefits">Benefits<a href="https://spencerheath.info/blog/dcu-automation-ninjaone#benefits" class="hash-link" aria-label="Direct link to Benefits" title="Direct link to Benefits">​</a></h3>
+<ul>
+<li><strong>Efficiency</strong>: Automates repetitive update tasks across Dell fleets.</li>
+<li><strong>Visibility</strong>: Integrates with NinjaOne’s custom fields for real-time status tracking.</li>
+<li><strong>Control</strong>: Offers granular options to suit different update strategies.</li>
+<li><strong>Open Source</strong>: Released under the MIT License—free to use, modify, and distribute.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="deployment-steps">Deployment Steps<a href="https://spencerheath.info/blog/dcu-automation-ninjaone#deployment-steps" class="hash-link" aria-label="Direct link to Deployment Steps" title="Direct link to Deployment Steps">​</a></h3>
+<ol>
+<li><strong>Download</strong>: Grab the script from <a href="https://github.com/Sp-e-n-c-er/Public-Ninja-One-Scripts/blob/main/Dell%20Command%20Update/Dell%20Command%20Update%20Automation%20Toolkit.ps1" target="_blank" rel="noopener noreferrer">GitHub</a>.</li>
+<li><strong>Configure NinjaOne</strong>: Add the <code>pleaseSelectAnOptionToRun</code> dropdown with the listed options.</li>
+<li><strong>Run</strong>: Deploy it via NinjaOne’s script engine and monitor results in your custom fields.</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="notes-and-disclaimer">Notes and Disclaimer<a href="https://spencerheath.info/blog/dcu-automation-ninjaone#notes-and-disclaimer" class="hash-link" aria-label="Direct link to Notes and Disclaimer" title="Direct link to Notes and Disclaimer">​</a></h3>
+<p>This script is provided under the MIT License—use it freely, but at your own risk. I’m not liable for any issues that arise; see the full license at <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">opensource.org/licenses/MIT</a> for details. It’s been tested in my environment, but always validate in yours before going full throttle.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="feedback-welcome">Feedback Welcome<a href="https://spencerheath.info/blog/dcu-automation-ninjaone#feedback-welcome" class="hash-link" aria-label="Direct link to Feedback Welcome" title="Direct link to Feedback Welcome">​</a></h3>
+<p>Have thoughts or suggestions? Reach out on <a href="https://github.com/Sp-e-n-c-er" target="_blank" rel="noopener noreferrer">GitHub</a> or <a href="https://discordapp.com/users/286552274099240960" target="_blank" rel="noopener noreferrer">Discord</a>. I’m considering enhancements like automatic version checks or expanded error reporting—let me know what you’d like to see!</p>
+<p>Thanks for reading—happy automating!</p>
+<p><em>Spencer Heath, 10 March 2025</em></p>]]></content:encoded>
+            <category>PowerShell</category>
+            <category>NinjaOne</category>
+            <category>Dell</category>
+            <category>Automation</category>
+            <category>System Management</category>
+        </item>
         <item>
             <title><![CDATA[Locking NinjaOne Systray scripts from users]]></title>
             <link>https://spencerheath.info/blog/AdminLock-Script</link>
@@ -57,7 +126,9 @@ Execute the following script hourly to automatically disable the field if it’s
 <p>See below for a visual guide on the systray setup, and the message a user will see if they dont have the permissions to run this.</p>
 <img src="https://github.com/user-attachments/assets/6fa5af98-e91d-49a6-b1e8-24e474745bb1" alt="Admin Only Scripts System Tray Example" width="300">
 <img src="https://github.com/user-attachments/assets/3e9481d7-bfbc-4106-90d4-dc4b03d5a6c7" alt="Invalid rights message" width="300">]]></content:encoded>
-            <category>Powershell</category>
+            <category>PowerShell</category>
+            <category>NinjaOne</category>
+            <category>Automation</category>
         </item>
     </channel>
 </rss>

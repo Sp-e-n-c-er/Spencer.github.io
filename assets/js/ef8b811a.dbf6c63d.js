@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkspencer_github_io=self.webpackChunkspencer_github_io||[]).push([[947],{6600:e=>{e.exports=JSON.parse('{"authors":[{"name":"Spencer Heath","title":"Technical Security Engineer","url":"https://github.com/Sp-e-n-c-er","page":{"permalink":"/blog/authors/sheath"},"socials":{"github":"https://github.com/Sp-e-n-c-er"},"key":"sheath","count":1}]}')}}]);
