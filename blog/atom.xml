@@ -2,11 +2,126 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://spencerheath.info/blog</id>
     <title>Spencer Heath Blog</title>
-    <updated>2025-03-10T00:00:00.000Z</updated>
+    <updated>2025-10-26T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://spencerheath.info/blog"/>
     <subtitle>Spencer Heath Blog</subtitle>
     <icon>https://spencerheath.info/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Allowing NinjaOne Ticketing Through Email Security]]></title>
+        <id>https://spencerheath.info/blog/NinjaOne-Ticketing-Bypass</id>
+        <link href="https://spencerheath.info/blog/NinjaOne-Ticketing-Bypass"/>
+        <updated>2025-10-26T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[When using Proofpoint for email filtering, you may notice that automatic forwarding rules stop working. Proofpoint no longer supports automatic forwarding, which means messages sent from your support address to NinjaOne can be blocked or dropped. To resolve this, you can create a connector and mail flow rule in Exchange Online that securely bypass outbound Proofpoint scanning for messages sent to NinjaOne’s ticketing system.]]></summary>
+        <content type="html"><![CDATA[<p>When using Proofpoint for email filtering, you may notice that automatic forwarding rules stop working. <a href="https://help.proofpoint.com/Proofpoint_Essentials/Email_Security/Administrator_Topics/Other_Features/Issues_with_Email_auto-forwarding" target="_blank" rel="noopener noreferrer">Proofpoint no longer supports automatic forwarding</a>, which means messages sent from your support address to NinjaOne can be blocked or dropped. To resolve this, you can create a connector and mail flow rule in Exchange Online that securely bypass outbound Proofpoint scanning for messages sent to NinjaOne’s ticketing system.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview">Overview<a href="https://spencerheath.info/blog/NinjaOne-Ticketing-Bypass#overview" class="hash-link" aria-label="Direct link to Overview" title="Direct link to Overview">​</a></h2>
+<p>You’ll create two items:</p>
+<ol>
+<li>A <strong>connector</strong> that routes messages directly to Microsoft 365, bypassing Proofpoint outbound scanning.</li>
+<li>A <strong>mail flow rule</strong> that redirects NinjaOne ticketing messages through that connector.</li>
+</ol>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="step-1-create-the-connector">Step 1: Create the Connector<a href="https://spencerheath.info/blog/NinjaOne-Ticketing-Bypass#step-1-create-the-connector" class="hash-link" aria-label="Direct link to Step 1: Create the Connector" title="Direct link to Step 1: Create the Connector">​</a></h2>
+<ol>
+<li>
+<p>Open the <strong>Exchange Admin Center (EAC)</strong> at <a href="https://admin.exchange.microsoft.com/" target="_blank" rel="noopener noreferrer">https://admin.exchange.microsoft.com</a></p>
+</li>
+<li>
+<p>Go to <strong>Mail Flow</strong> → <strong>Connectors</strong></p>
+</li>
+<li>
+<p>Click <strong>Add a connector</strong></p>
+<ul>
+<li><strong>From:</strong> Office 365</li>
+<li><strong>To:</strong> Partner organization</li>
+</ul>
+</li>
+<li>
+<p>Configure the connector as shown below:</p>
+<p><img decoding="async" loading="lazy" src="https://i.imgur.com/02rZC4F.png" alt="Bypass Proofpoint Connector Screenshot" class="img_ev3q"></p>
+</li>
+<li>
+<p>Use the following configuration:</p>
+<ul>
+<li><strong>Name:</strong> <code>Bypass Proofpoint Connector</code></li>
+<li><strong>Status:</strong> On</li>
+<li><strong>Use of connector:</strong> Only when a transport rule redirects messages to this connector</li>
+<li><strong>Routing:</strong> Use the MX record associated with the partner’s domain</li>
+<li><strong>Security restrictions:</strong> Require TLS and connect only if the recipient’s email server certificate is issued by a trusted CA</li>
+</ul>
+</li>
+<li>
+<p>When prompted to <strong>validate the connector</strong>, use the <strong>inbound email address</strong> provided by <strong>NinjaOne Ticketing</strong>.</p>
+</li>
+<li>
+<p>After validation completes successfully, click <strong>Finish</strong>.</p>
+</li>
+</ol>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="step-2-create-the-mail-flow-rule">Step 2: Create the Mail Flow Rule<a href="https://spencerheath.info/blog/NinjaOne-Ticketing-Bypass#step-2-create-the-mail-flow-rule" class="hash-link" aria-label="Direct link to Step 2: Create the Mail Flow Rule" title="Direct link to Step 2: Create the Mail Flow Rule">​</a></h2>
+<ol>
+<li>
+<p>In the <strong>Exchange Admin Center</strong>, go to <strong>Mail Flow</strong> → <strong>Rules</strong></p>
+</li>
+<li>
+<p>Click <strong>Add a rule</strong> → <strong>Create a new rule</strong></p>
+</li>
+<li>
+<p>Configure it as shown below:</p>
+<p><img decoding="async" loading="lazy" src="https://i.imgur.com/tZdcIGd.png" alt="Bypass Proofpoint Rule - Settings Screenshot" class="img_ev3q"></p>
+<ul>
+<li><strong>Name:</strong> <code>Bypass Proofpoint for NinjaOne Ticketing</code></li>
+<li><strong>Apply this rule if:</strong> The recipient domain is <code>rmmservice.com</code></li>
+<li><strong>Do the following:</strong> Redirect the message to the following connector → <code>Bypass Proofpoint Connector</code></li>
+</ul>
+</li>
+<li>
+<p>Under <strong>Settings</strong>, configure as shown:</p>
+<p><img decoding="async" loading="lazy" src="https://i.imgur.com/rW7kNUb.png" alt="Bypass Proofpoint Rule - Conditions Screenshot" class="img_ev3q"></p>
+<ul>
+<li><strong>Priority:</strong> As high as possible</li>
+<li><strong>Rule mode:</strong> Enforce</li>
+<li><strong>Severity:</strong> Low</li>
+<li><strong>Stop processing more rules:</strong> Checked</li>
+<li><strong>Match sender address in message:</strong> Header</li>
+</ul>
+</li>
+<li>
+<p>Save the rule.</p>
+</li>
+</ol>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="step-3-test-and-verify">Step 3: Test and Verify<a href="https://spencerheath.info/blog/NinjaOne-Ticketing-Bypass#step-3-test-and-verify" class="hash-link" aria-label="Direct link to Step 3: Test and Verify" title="Direct link to Step 3: Test and Verify">​</a></h2>
+<p>Send a test email or trigger a ticket notification from NinjaOne.<br>
+<!-- -->If configured correctly:</p>
+<ul>
+<li>The message should bypass Proofpoint filtering.</li>
+<li>The message should still use TLS encryption.</li>
+<li>Delivery should complete successfully to the target mailbox.</li>
+</ul>
+<p>You can confirm successful routing by reviewing <strong>Message Trace</strong> in the Exchange Admin Center.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-proofpoint-blocks-forwarding">Why Proofpoint Blocks Forwarding<a href="https://spencerheath.info/blog/NinjaOne-Ticketing-Bypass#why-proofpoint-blocks-forwarding" class="hash-link" aria-label="Direct link to Why Proofpoint Blocks Forwarding" title="Direct link to Why Proofpoint Blocks Forwarding">​</a></h2>
+<p>Proofpoint Essentials discontinued support for email auto-forwarding due to abuse and spoofing risks. Automatic forwarding is often used by threat actors to exfiltrate sensitive data or redirect messages externally. As a result, Proofpoint enforces this block by design even for legitimate use cases like helpdesk systems.</p>
+<p>By creating a targeted connector and mail flow rule, you maintain secure message handling while allowing legitimate ticketing messages to pass.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="security-notes">Security Notes<a href="https://spencerheath.info/blog/NinjaOne-Ticketing-Bypass#security-notes" class="hash-link" aria-label="Direct link to Security Notes" title="Direct link to Security Notes">​</a></h2>
+<ul>
+<li>Only use this bypass for known, trusted systems such as NinjaOne.</li>
+<li>Keep TLS and certificate validation enabled.</li>
+<li>Avoid using wildcard or broad domain rules.</li>
+<li>Regularly review mail flow logs to confirm that only intended messages are being routed through the connector.</li>
+</ul>]]></content>
+        <author>
+            <name>Spencer Heath</name>
+            <uri>https://github.com/Sp-e-n-c-er</uri>
+        </author>
+        <category label="ticketing" term="ticketing"/>
+        <category label="NinjaOne" term="NinjaOne"/>
+        <category label="email security" term="email security"/>
+        <category label="proofpoint" term="proofpoint"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Streamlining Dell Updates with NinjaOne: A PowerShell Solution]]></title>
         <id>https://spencerheath.info/blog/dcu-automation-ninjaone</id>
